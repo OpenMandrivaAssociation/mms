@@ -22,6 +22,7 @@ BuildRequires:	SDL-devel
 BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
 BuildRequires:	libtool
+BuildRequires:	libxscrnsaver-devel
 # MMS can control lots of external programs, so we only list the
 # non-obvious ones here:
 Requires:	wget eject
