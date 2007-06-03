@@ -1,7 +1,7 @@
 
 %define name	mms
 %define version	1.0.8.3
-%define rel	1
+%define rel	2
 
 Summary:	My Media System - PVR software
 Name:		%name
