@@ -9,6 +9,7 @@ Version:	%version
 Release:	%mkrel %rel
 License:	GPL
 Group:		Video
+URL:		http://mms.sunsite.dk/
 Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
