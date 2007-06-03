@@ -21,6 +21,7 @@ BuildRequires:	libcommoncpp2-devel
 BuildRequires:	SDL-devel
 BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
+BuildRequires:	libtool
 # MMS can control lots of external programs, so we only list the
 # non-obvious ones here:
 Requires:	wget eject
