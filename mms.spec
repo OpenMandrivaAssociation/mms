@@ -11,6 +11,7 @@ License:	GPL
 Group:		Video
 URL:		http://mms.sunsite.dk/
 Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
+Patch1:		mms-allow-gcc4.2.patch
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
@@ -43,6 +44,7 @@ application.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 
