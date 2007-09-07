@@ -1,6 +1,6 @@
 
 %define name	mms
-%define version	1.0.8.4
+%define version	1.0.8.5
 %define rel	1
 
 Summary:	My Media System - PVR software
@@ -25,9 +25,9 @@ BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
 BuildRequires:	libtool
 BuildRequires:	libxscrnsaver-devel
-# MMS can control lots of external programs, so we only list the
-# non-obvious ones here:
-Requires:	wget eject
+BuildRequires:	ffmpeg-devel
+BuildRequires:	ncurses-devel
+Suggests:	wget eject mplayer
 
 %description
 My Media System is an application that manages, displays and plays
