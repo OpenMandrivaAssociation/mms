@@ -31,6 +31,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	libcommoncpp2-devel
 BuildRequires:	SDL-devel
 BuildRequires:	mesagl-devel
+BuildRequires:	mesaglu-devel
 BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
 BuildRequires:	libtool
