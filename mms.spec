@@ -74,12 +74,15 @@ application.
 	--enable-evdev \
 	--enable-dvb \
 	--enable-opengl \
-	--enable-vgagl \
 	--enable-dxr3 \
 	--enable-mpeg \
 	--enable-xine-audio \
 	--enable-gst-audio \
 	--enable-python
+
+# (anssi 01/2008): vgagl disabled, due to
+# dlopen failed with error: /usr/share/mms/plugins/lib_output_vgagl.so: undefined symbol: vga_getmodeinfo
+
 
 %make EXTRA_FLAGS="%optflags"
 
