@@ -41,6 +41,8 @@ BuildRequires:	python-devel
 BuildRequires:	libgstreamer0.10-devel
 BuildRequires:	libalsaplayer-devel
 BuildRequires:	inotify-tools-devel
+BuildRequires:	boost-devel
+BuildRequires:	sqlite3-devel
 Suggests:	wget eject mplayer
 
 %description
