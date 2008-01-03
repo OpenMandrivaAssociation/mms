@@ -1,17 +1,26 @@
 
 %define name	mms
-%define version	1.0.8.5
-%define rel	2
+%define version	1.1.0
+%define prever	rc1
+%define rel	1
+%if %prever
+%define release	%mkrel 0.%prever.%rel
+%else
+%define release	%mkrel %rel
+%endif
 
 Summary:	My Media System - PVR software
 Name:		%name
 Version:	%version
-Release:	%mkrel %rel
+Release:	%release
 License:	GPL
 Group:		Video
 URL:		http://mms.sunsite.dk/
+%if %prever
+Source:		http://mms.sunsite.dk/%name-%version-%prever.tar.bz2
+%else
 Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
-Patch1:		mms-allow-gcc4.2.patch
+%endif
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
@@ -21,12 +30,16 @@ BuildRequires:	em8300-devel
 BuildRequires:	lirc-devel
 BuildRequires:	libcommoncpp2-devel
 BuildRequires:	SDL-devel
+BuildRequires:	mesagl-devel
 BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
 BuildRequires:	libtool
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	ffmpeg-devel
 BuildRequires:	ncurses-devel
+BuildRequires:	python
+BuildRequires:	libgstreamer0.10-devel
+BuildRequires:	libalsaplayer-devel
 Suggests:	wget eject mplayer
 
 %description
@@ -43,8 +56,11 @@ individual strength, you get the best of all worlds, in one media
 application.
 
 %prep
+%if %prever
+%setup -q -n %{name}-%{version}-%{prever}
+%else
 %setup -q
-%patch1 -p1
+%endif
 
 %build
 
@@ -53,18 +69,17 @@ application.
 	--prefix=%{_prefix} \
 	--enable-game \
 	--enable-tv \
-	--enable-bttv-radio \
 	--enable-picture-epg \
-	--enable-eject-tray \
 	--enable-lirc \
 	--enable-evdev \
 	--enable-dvb \
-	--enable-vga \
+	--enable-opengl \
 	--enable-vgagl \
-	--enable-fbdev \
 	--enable-dxr3 \
 	--enable-mpeg \
-	--enable-xine-audio
+	--enable-xine-audio \
+	--enable-gst-audio \
+	--enable-python
 
 %make EXTRA_FLAGS="%optflags"
 
@@ -75,7 +90,7 @@ rm -rf %buildroot
 
 install -m755 tools/* %buildroot/%_bindir
 
-%find_lang %name
+%find_lang %name --all-name
 
 %clean
 rm -rf %buildroot
@@ -84,20 +99,28 @@ rm -rf %buildroot
 %defattr(-,root,root)
 %doc cfg doc/CHANGELOG doc/README
 %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/config
-%config(noreplace) %_sysconfdir/%name/input-keyboard
-%config(noreplace) %_sysconfdir/%name/input-lirc
-%config(noreplace) %_sysconfdir/%name/lirc.conf
+%dir %_sysconfdir/%name/input
+%dir %_sysconfdir/%name/input/keyboard
+%dir %_sysconfdir/%name/input/lirc
+%config(noreplace) %_sysconfdir/%name/*Config
+%config(noreplace) %_sysconfdir/%name/input/*/*
+%config(noreplace) %_sysconfdir/%name/genericplayer.ops
+%config %_sysconfdir/%name/lircrc.example
 %_bindir/%name
+%_bindir/midentify
+%_bindir/mms-audio-library
+%_bindir/mms-movie-library
+%_bindir/mms-pic-library
 %_bindir/fetch_channels.py
 %_bindir/fork-launcher.sh
 %_bindir/gen_tvlisting.sh
 %_bindir/nxtvepg-to-tv-xml.sh
 %_mandir/man1/%name.1*
+%_mandir/man1/mms-pic-library.1*
 %_mandir/de
 %_datadir/%name
-%dir %_localstatedir/%name
-%dir %_localstatedir/%name/playlists
-%dir %_var/cache/%name
-%config(noreplace) %_localstatedir/%name/options
+#dir %_localstatedir/%name
+#dir %_localstatedir/%name/playlists
+#dir %_var/cache/%name
+#config(noreplace) %_localstatedir/%name/options
 
