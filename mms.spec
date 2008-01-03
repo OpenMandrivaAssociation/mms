@@ -40,6 +40,7 @@ BuildRequires:	ncurses-devel
 BuildRequires:	python
 BuildRequires:	libgstreamer0.10-devel
 BuildRequires:	libalsaplayer-devel
+BuildRequires:	inotify-tools-devel
 Suggests:	wget eject mplayer
 
 %description
