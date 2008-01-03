@@ -89,6 +89,8 @@ rm -rf %buildroot
 %makeinstall_std
 
 install -m755 tools/* %buildroot/%_bindir
+# Shipped in mplayer
+rm %buildroot/%_bindir/midentify
 
 %find_lang %name --all-name
 
@@ -107,7 +109,6 @@ rm -rf %buildroot
 %config(noreplace) %_sysconfdir/%name/genericplayer.ops
 %config %_sysconfdir/%name/lircrc.example
 %_bindir/%name
-%_bindir/midentify
 %_bindir/mms-audio-library
 %_bindir/mms-movie-library
 %_bindir/mms-pic-library
