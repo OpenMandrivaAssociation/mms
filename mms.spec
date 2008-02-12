@@ -39,7 +39,7 @@ BuildRequires:	libxscrnsaver-devel
 BuildRequires:	ffmpeg-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	python-devel
-BuildRequires:	libgstreamer0.10-devel
+BuildRequires:	gstreamer0.10-devel
 BuildRequires:	libalsaplayer-devel
 BuildRequires:	inotify-tools-devel
 BuildRequires:	boost-devel
