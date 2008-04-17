@@ -1,8 +1,8 @@
 
 %define name	mms
 %define version	1.1.0
-%define prever	rc1
-%define rel	2
+%define prever	rc5
+%define rel	1
 %if %prever
 %define release	%mkrel 0.%prever.%rel
 %else
@@ -65,6 +65,13 @@ application.
 %else
 %setup -q
 %endif
+# (Anssi 04/2008)
+# $(MAKE): Speeds up parallel make somewhat
+# -L/usr/lib: Unnecessary, sometimes breaks lib64 build
+find -name Makefile -print0 | xargs -0 sed -i -e "s,make ,\$(MAKE) ," -e "s,-L/usr/lib , ,"
+
+sed -i 's,/lib/mms,/%{_lib}/mms,g' Makefile plugins/plugin.hpp
+sed -i 's,/usr/local/lib/mms/,%{_libdir}/mms/,g' cfg/WeatherConfig plugins/feature/weather/weather_config_parameters
 
 %build
 
@@ -82,22 +89,30 @@ application.
 	--enable-mpeg \
 	--enable-xine-audio \
 	--enable-gst-audio \
-	--enable-python
+	--enable-python \
+	--enable-clock \
+	--enable-notify-area \
+	--enable-weather \
+	--enable-lcd
+
+# Too unstable with our current ffmpeg:
+#	--enable-ffmpeg-thumb
 
 # (anssi 01/2008): vgagl disabled, due to
 # dlopen failed with error: /usr/share/mms/plugins/lib_output_vgagl.so: undefined symbol: vga_getmodeinfo
 
-
-%make EXTRA_FLAGS="%optflags"
+%make EXTRA_FLAGS="%optflags" PYTHON_INSTALL=%{python_sitearch} PLUGINDIR=%{_libdir}/mms/plugins
 
 %install
 rm -rf %buildroot
 
-%makeinstall_std
+%makeinstall_std PYTHON_INSTALL=%{python_sitearch} PLUGINDIR=%{_libdir}/mms/plugins
 
 install -m755 tools/* %buildroot/%_bindir
 # Shipped in mplayer
 rm %buildroot/%_bindir/midentify
+# Shipped in libdir
+rm %buildroot/%_bindir/get_weather.sh
 
 %find_lang %name --all-name
 
@@ -106,7 +121,7 @@ rm -rf %buildroot
 
 %files -f %name.lang
 %defattr(-,root,root)
-%doc cfg doc/CHANGELOG doc/README
+%doc cfg doc/*
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/input
 %dir %_sysconfdir/%name/input/keyboard
@@ -123,10 +138,15 @@ rm -rf %buildroot
 %_bindir/fork-launcher.sh
 %_bindir/gen_tvlisting.sh
 %_bindir/nxtvepg-to-tv-xml.sh
+%dir %_libdir/%{name}
+%_libdir/%name/gen_tvlisting.sh
+%_libdir/%name/get_weather.sh
+%_libdir/%{name}/plugins
 %_mandir/man1/%name.1*
 %_mandir/man1/mms-pic-library.1*
 %_mandir/de
 %_datadir/%name
+%{python_sitearch}/mmsv2*.so
 #dir %_localstatedir/%name
 #dir %_localstatedir/%name/playlists
 #dir %_var/cache/%name
