@@ -147,8 +147,8 @@ rm -rf %buildroot
 %_mandir/de
 %_datadir/%name
 %{python_sitearch}/mmsv2*.so
-#dir %_localstatedir/%name
-#dir %_localstatedir/%name/playlists
+#dir %_localstatedir/lib/%name
+#dir %_localstatedir/lib/%name/playlists
 #dir %_var/cache/%name
-#config(noreplace) %_localstatedir/%name/options
+#config(noreplace) %_localstatedir/lib/%name/options
 
