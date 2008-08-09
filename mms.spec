@@ -110,8 +110,6 @@ rm -rf %buildroot
 install -m755 tools/* %buildroot/%_bindir
 # Shipped in mplayer
 rm %buildroot/%_bindir/midentify
-# Shipped in libdir
-rm %buildroot/%_bindir/get_weather.sh
 
 %find_lang %name --all-name
 
@@ -143,11 +141,6 @@ rm -rf %buildroot
 %_libdir/%{name}/plugins
 %_mandir/man1/%name.1*
 %_mandir/man1/mms-pic-library.1*
-%_mandir/de
+%lang(de) %_mandir/de/man1/*
 %_datadir/%name
 %{python_sitearch}/mmsv2*.so
-#dir %_localstatedir/lib/%name
-#dir %_localstatedir/lib/%name/playlists
-#dir %_var/cache/%name
-#config(noreplace) %_localstatedir/lib/%name/options
-
