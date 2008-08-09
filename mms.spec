@@ -80,7 +80,6 @@ sed -i 's,/usr/local/lib/mms/,%{_libdir}/mms/,g' cfg/WeatherConfig plugins/featu
 	--prefix=%{_prefix} \
 	--enable-game \
 	--enable-tv \
-	--enable-picture-epg \
 	--enable-lirc \
 	--enable-evdev \
 	--enable-dvb \
