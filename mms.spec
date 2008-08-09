@@ -127,6 +127,8 @@ rm -rf %buildroot
 %config(noreplace) %_sysconfdir/%name/input/*/*
 %config(noreplace) %_sysconfdir/%name/genericplayer.ops
 %config %_sysconfdir/%name/lircrc.example
+%_sysconfdir/%name/scripts
+%_sysconfdir/ClockAlarms
 %_bindir/%name
 %_bindir/mms-audio-library
 %_bindir/mms-movie-library
@@ -134,12 +136,14 @@ rm -rf %buildroot
 %_bindir/fetch_channels.py
 %_bindir/fork-launcher.sh
 %_bindir/gen_tvlisting.sh
+%_bindir/alarm.sh
+%_bindir/vboxtowav.sh
 %_bindir/nxtvepg-to-tv-xml.sh
 %dir %_libdir/%{name}
 %_libdir/%name/gen_tvlisting.sh
-%_libdir/%name/get_weather.sh
+%_libdir/%name/alarm.sh
 %_libdir/%{name}/plugins
-%_mandir/man1/%name.1*
+%_mandir/man1/*
 %_mandir/man1/mms-pic-library.1*
 %lang(de) %_mandir/de/man1/*
 %_datadir/%name
