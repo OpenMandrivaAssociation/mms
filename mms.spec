@@ -128,7 +128,7 @@ rm -rf %buildroot
 %config(noreplace) %_sysconfdir/%name/genericplayer.ops
 %config %_sysconfdir/%name/lircrc.example
 %_sysconfdir/%name/scripts
-%_sysconfdir/ClockAlarms
+%_sysconfdir/%name/ClockAlarms
 %_bindir/%name
 %_bindir/mms-audio-library
 %_bindir/mms-movie-library
