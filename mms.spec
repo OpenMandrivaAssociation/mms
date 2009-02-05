@@ -21,11 +21,11 @@ Source:		http://mms.sunsite.dk/%name-%version-%prever.tar.bz2
 %else
 Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
 %endif
+Patch0:		mms-1.1.0-rc9-py2.6.patch
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
 BuildRequires:	sqlite-devel
-BuildRequires:	libxine-devel
 BuildRequires:	em8300-devel
 BuildRequires:	lirc-devel
 BuildRequires:	libcommoncpp2-devel
@@ -34,6 +34,7 @@ BuildRequires:	mesagl-devel
 BuildRequires:	mesaglu-devel
 BuildRequires:	libsvgalib-devel
 BuildRequires:	pcre-devel
+BuildRequires:	libxine-devel
 BuildRequires:	libtool
 BuildRequires:	libxscrnsaver-devel
 BuildRequires:	ffmpeg-devel
@@ -65,6 +66,7 @@ application.
 %else
 %setup -q
 %endif
+%patch0 -p0
 # (Anssi 04/2008)
 # $(MAKE): Speeds up parallel make somewhat
 # -L/usr/lib: Unnecessary, sometimes breaks lib64 build
@@ -86,21 +88,22 @@ sed -i 's,/usr/local/lib/mms/,%{_libdir}/mms/,g' cfg/WeatherConfig plugins/featu
 	--enable-opengl \
 	--enable-dxr3 \
 	--enable-mpeg \
-	--enable-xine-audio \
 	--enable-gst-audio \
 	--enable-python \
 	--enable-clock \
 	--enable-notify-area \
 	--enable-weather \
 	--enable-lcd
+%define Werror_cflags %nil
+echo 'EXTRA_FLAGS +=%{optflags}' >> common.mak
 
 # Too unstable with our current ffmpeg:
 #	--enable-ffmpeg-thumb
 
 # (anssi 01/2008): vgagl disabled, due to
 # dlopen failed with error: /usr/share/mms/plugins/lib_output_vgagl.so: undefined symbol: vga_getmodeinfo
-
-%make EXTRA_FLAGS="%optflags" PYTHON_INSTALL=%{python_sitearch} PLUGINDIR=%{_libdir}/mms/plugins
+%define _disable_ld_no_undefined 1
+%make CXX="c++ %{?ldflags}"
 
 %install
 rm -rf %buildroot
@@ -126,6 +129,7 @@ rm -rf %buildroot
 %config(noreplace) %_sysconfdir/%name/*Config
 %config(noreplace) %_sysconfdir/%name/input/*/*
 %config(noreplace) %_sysconfdir/%name/genericplayer.ops
+%config(noreplace) %_sysconfdir/%name/RadioStations
 %config %_sysconfdir/%name/lircrc.example
 %_sysconfdir/%name/scripts
 %_sysconfdir/%name/ClockAlarms
@@ -144,7 +148,6 @@ rm -rf %buildroot
 %_libdir/%name/alarm.sh
 %_libdir/%{name}/plugins
 %_mandir/man1/*
-%_mandir/man1/mms-pic-library.1*
 %lang(de) %_mandir/de/man1/*
 %_datadir/%name
 %{python_sitearch}/mmsv2*.so
