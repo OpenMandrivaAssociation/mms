@@ -1,7 +1,7 @@
 
 %define name	mms
 %define version	1.1.0
-%define prever	rc8
+%define prever	rc9
 %define rel	1
 %if %prever
 %define release	%mkrel 0.%prever.%rel
