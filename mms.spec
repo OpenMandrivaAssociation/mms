@@ -2,7 +2,7 @@
 %define name	mms
 %define version	1.1.0
 %define prever	rc9
-%define rel	1
+%define rel	2
 %if %prever
 %define release	%mkrel 0.%prever.%rel
 %else
@@ -22,6 +22,7 @@ Source:		http://mms.sunsite.dk/%name-%version-%prever.tar.bz2
 Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
 %endif
 Patch0:		mms-1.1.0-rc9-py2.6.patch
+Patch1:		mms-no-lirc-by-default.patch
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
@@ -67,6 +68,7 @@ application.
 %setup -q
 %endif
 %patch0 -p0
+%patch1 -p1
 # (Anssi 04/2008)
 # $(MAKE): Speeds up parallel make somewhat
 # -L/usr/lib: Unnecessary, sometimes breaks lib64 build
@@ -100,9 +102,10 @@ echo 'EXTRA_FLAGS +=%{optflags}' >> common.mak
 # Too unstable with our current ffmpeg:
 #	--enable-ffmpeg-thumb
 
-# (anssi 01/2008): vgagl disabled, due to
-# dlopen failed with error: /usr/share/mms/plugins/lib_output_vgagl.so: undefined symbol: vga_getmodeinfo
+# Apparently plugins depend on extra dependencies of main executable,
+# this should be fixed.
 %define _disable_ld_no_undefined 1
+%define _disable_ld_as_needed 1
 %make CXX="c++ %{?ldflags}"
 
 %install
