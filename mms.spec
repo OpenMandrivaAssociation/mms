@@ -23,6 +23,7 @@ Source:		http://mms.sunsite.dk/%name-%version.tar.bz2
 %endif
 Patch0:		mms-1.1.0-rc9-py2.6.patch
 Patch1:		mms-no-lirc-by-default.patch
+Patch2:		mms-1.1.0-rc9-stdio.patch
 BuildRoot:	%_tmppath/%name-root
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
@@ -69,6 +70,7 @@ application.
 %endif
 %patch0 -p0
 %patch1 -p1
+%patch2 -p1
 # (Anssi 04/2008)
 # $(MAKE): Speeds up parallel make somewhat
 # -L/usr/lib: Unnecessary, sometimes breaks lib64 build
@@ -106,7 +108,8 @@ echo 'EXTRA_FLAGS +=%{optflags}' >> common.mak
 # this should be fixed.
 %define _disable_ld_no_undefined 1
 %define _disable_ld_as_needed 1
-%make CXX="c++ %{?ldflags}"
+# (cg) Parallel make breaks things (the above sed seems to be fine tho')
+make CXX="c++ %{?ldflags}"
 
 %install
 rm -rf %buildroot
