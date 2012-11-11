@@ -1,0 +1,13 @@
+--- configure~	2008-12-14 13:44:49.000000000 -0500
++++ configure	2009-02-05 10:26:49.000000000 -0500
+@@ -614,8 +614,8 @@
+ 
+ python_version=
+ 
+-if [ -f "/usr/include/python2.5/Python.h" ]; then
+-python_version="2.5"
++if [ -f "/usr/include/python2.6/Python.h" ]; then
++python_version="2.6"
+ elif [ -f "/usr/include/python2.4/Python.h" ]; then
+ python_version="2.4"
+ fi

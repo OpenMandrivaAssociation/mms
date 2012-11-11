@@ -1,0 +1,30 @@
+Index: mms-1.1.0-rc9/Makefile
+===================================================================
+--- mms-1.1.0-rc9/Makefile
++++ mms-1.1.0-rc9/Makefile	2009-02-21 14:36:40.000000000 +0200
+@@ -132,25 +132,8 @@
+ OLD_PWD = ${PWD}
+ 
+ LOCAL_PATCH = "echo"
+-
+-ifeq ($(LIRC),yes)
+-	LOCAL_PATCH = make patch-lirc-local
+-else
+-ifeq ($(EVDEV),yes)
+-	LOCAL_PATCH = make patch-evdev-local
+-endif
+-endif
+-
+ ETC_PATCH = "echo"
+ 
+-ifeq ($(LIRC),yes)
+-	ETC_PATCH = make patch-lirc
+-else
+-ifeq ($(EVDEV),yes)
+-	ETC_PATCH = make patch-evdev
+-endif
+-endif
+-
+ patch-lirc:
+ 	@cd $(DESTDIR)$(CONFIGDIR)/ && patch -p1 < $(OLD_PWD)/cfg/patch-lirc
+ 
