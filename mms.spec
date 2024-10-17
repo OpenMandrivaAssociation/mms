@@ -15,7 +15,7 @@ Version:	%version
 Release:	%release
 License:	GPL
 Group:		Video
-URL:		http://mms.sunsite.dk/
+URL:		https://mms.sunsite.dk/
 %if %prever
 Source:		http://mms.sunsite.dk/%name-%version-%prever.tar.bz2
 %else
