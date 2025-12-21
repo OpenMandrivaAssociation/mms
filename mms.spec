@@ -25,6 +25,11 @@ Patch0:		mms-1.1.0-rc9-py2.6.patch
 Patch1:		mms-no-lirc-by-default.patch
 Patch2:		mms-1.1.0-rc9-stdio.patch
 BuildRoot:	%_tmppath/%name-root
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	imlib2-devel
 BuildRequires:	taglib-devel
 BuildRequires:	sqlite-devel
