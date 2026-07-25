@@ -4,9 +4,9 @@
 %define prever	rc9
 %define rel	6
 %if %prever
-%define release	%mkrel 0.%prever.%rel
+%define release 1
 %else
-%define release	%mkrel %rel
+%define release %rel.1
 %endif
 
 Summary:	My Media System - PVR software
